@@ -1,0 +1,40 @@
+@media(max-width: 85em){
+    .adjust-categories {
+        padding-right: 25%;
+      }
+}
+
+@media(max-width: 75em){
+    .adjust-categories {
+        padding-right: 20%;
+      }
+
+    .navbar-center input[type="text"] {
+        width: 300px;
+      } 
+
+      .navbar-right li {
+        font-weight: 200;
+    }
+
+    .nav-all-category {
+        font-size: 0.9rem;
+    }
+}
+
+@media(max-width: 65em){
+    .adjust-categories {
+        padding-right: 10%;
+      }
+}
+
+@media(max-width: 59em){
+    .adjust-categories {
+        /* padding-right: 10%; */
+        display: none;
+      }
+
+      .navbar-center{
+        display: none;
+      }
+}

@@ -1,0 +1,115 @@
+section {
+  display: flex;
+}
+
+.display-img {
+  height: 100vh;
+  width: 50%;
+}
+
+.display-img img {
+  height: 100%;
+  width: 100%;
+}
+
+.cart-page {
+  margin-left: 50px;
+  width: 42%;
+}
+
+.category-name {
+  font-family: Muli, sans-serif;
+  font-weight: bold;
+  margin-top: 50px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.list-style {
+  border: 1px solid #ddd;
+  height: 135px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.list-style img {
+  width: 30%;
+  height: 95%;
+  margin-top: 3px;
+  margin-left: 3px;
+}
+
+.list-style ul {
+  margin-left: 20px;
+  width: 65%;
+  margin-top: 10px;
+}
+
+.list-style li {
+  padding: 5px;
+  list-style-type: none;
+}
+
+.list-style li:nth-child(3) {
+  margin-top: 15px;
+}
+
+.op-quantity {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 15px;
+}
+
+.op-quantity button {
+  width: 40px;
+  height: 30px;
+  background-color: green;
+  border: 0px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.op-quantity button:hover {
+  background-color: rgb(160, 228, 58);
+}
+
+.dlt-product {
+  margin-left: 5px;
+  margin-right: 8px;
+}
+
+.op-quantity input {
+  width: 40%;
+  height: 22%;
+  border: 2px 0px solid;
+}
+
+.checkoutbtn button {
+  padding: 5px 15px;
+  font-family: Muli, sans-serif;
+  border: none;
+  border-radius: 5px;
+  background-color: #25a541;
+  cursor: pointer;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  box-shadow: 4px 4px 4px 0px #888888;
+  align-items: right;
+}
+
+.checkoutbtn button:hover {
+  background-color: #4caf50;
+  color: white;
+  margin-right: 0;
+}
+
+.cart-total-price {
+  padding: 5px;
+  font-family: Muli, sans-serif;
+}
+
+.flex-cart{
+  display: flex;
+  justify-content: space-between
+}
