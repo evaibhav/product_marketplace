@@ -1,3 +1,5 @@
+import "./create.css";
+
 import axios from "axios";
 import { useState } from "react";
 
@@ -28,7 +30,7 @@ const CreateProduct = () => {
             <label for="pname">Name:</label>
             <input
               type="text"
-              id="name"
+              id="pname"
               name="pname"
               value={product.pname}
               required
@@ -38,15 +40,15 @@ const CreateProduct = () => {
             />
           </div>
           <div class="form-group">
-            <label for="pprice">Price:</label>
+            <label for="price">Price:</label>
             <input
               type="number"
               id="price"
-              name="pprice"
-              value={product.pprice}
+              name="price"
+              value={product.price}
               required
               onChange={(e) =>
-                setProduct({ ...product, pprice: e.target.value })
+                setProduct({ ...product, price: e.target.value })
               }
             />
           </div>
