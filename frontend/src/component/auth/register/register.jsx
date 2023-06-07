@@ -1,10 +1,9 @@
-import { useState } from "react";
 import "./register.css";
+
 import axios from "axios";
+import { useState } from "react";
 
 const Register = () => {
-
-
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -18,55 +17,160 @@ const Register = () => {
     state: "",
     country: "",
   });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(user);
+    axios
+      .post(`http://localhost:8080/register`, user)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
-      <div class="container">
-        <h2>Register</h2>
-        <form>
-          <div class="form-group">
-            <label for="username">Name:</label>
-            <input type="text" id="username" name="username" value ={name}  required />
-          </div>
-          <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required />
-          </div>
-          <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required />
-          </div>
-          <div class="form-group">
-            <label for="phone">Phone:</label>
-            <input type="tel" id="phone" name="phone" required />
-          </div>
-          <div class="form-group">
-            <label for="dob">Dob:</label>
-            <input type="date" id="dob" name="dob" required />
-          </div>
-          <div class="form-group">
-            <label for="locality">Locality:</label>
-            <input type="text" id="Locality" name="Locality" required />
-          </div>
-          <div class="form-group">
-            <label for="city">City:</label>
-            <input type="text" id="city" name="city" required />
-          </div>
-          <div class="form-group">
-            <label for="pincode">Pincode:</label>
-            <input type="text" id="pincode" name="pincode" required />
-          </div>
-          <div class="form-group">
-            <label for="state">State:</label>
-            <input type="text" id="State" name="State" required />
-          </div>
-          <div class="form-group">
-            <label for="country">Country:</label>
-            <input type="text" id="country" name="country" required />
-          </div>
-          <input type="submit" value="Register" />
-          <input type="submit" value="Login" />
-
-        </form>
+      <div className="head-container">
+        <div class="container">
+          <h2>Register</h2>
+          <form onSubmit={handleSubmit}>
+            <div class="form-group">
+              <label for="name">Name:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={user.name}
+                required
+                onChange={(e) => setUser({ ...user, name: e.target.value })}
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={user.email}
+                required
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
+              />
+            </div>
+            <div class="form-group">
+              <label for="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={user.password}
+                required
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
+              />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone:</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={user.phone}
+                required
+                onChange={(e) => setUser({ ...user, phone: e.target.value })}
+              />
+            </div>
+            <div class="form-group">
+              <label for="dob">Dob:</label>
+              <input
+                type="date"
+                id="dob"
+                name="dob"
+                value={user.dob}
+                required
+                onChange={(e) => setUser({ ...user, dob: e.target.value })}
+              />
+            </div>
+            <div class="form-group">
+              <label for="locality">Locality:</label>
+              <input
+                type="text"
+                id="Locality"
+                name="locality"
+                value={user.locality}
+                required
+                onChange={(e) => setUser({ ...user, locality: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label For="role">
+                Role:
+                <select
+                  id="role"
+                  value={user.role}
+                  onChange={(e) => setUser({ ...user, role: e.target.value })}
+                >
+                  <option value="vendor">Vendor</option>
+                  <option value="customer">Customer</option>
+                </select>
+              </label>
+            </div>
+            <div class="form-group">
+              <label for="city">City:</label>
+              <input
+                type="text"
+                id="city"
+                name="city"
+                value={user.city}
+                required
+                onChange={(e) => setUser({ ...user, city: e.target.value })}
+              />
+            </div>
+            <div class="form-group">
+              <label for="pincode">Pincode:</label>
+              <input
+                type="text"
+                id="pincode"
+                name="pincode"
+                value={user.pincode}
+                required
+                onChange={(e) => setUser({ ...user, pincode: e.target.value })}
+              />
+            </div>
+            <div class="form-group">
+              <label for="state">State:</label>
+              <input
+                type="text"
+                id="State"
+                name="state"
+                value={user.state}
+                required
+                onChange={(e) => setUser({ ...user, state: e.target.value })}
+              />
+            </div>
+            <div class="form-group">
+              <label for="country">Country:</label>
+              <input
+                type="text"
+                id="country"
+                name="country"
+                value={user.country}
+                required
+                onChange={(e) => setUser({ ...user, country: e.target.value })}
+              />
+            </div>
+            <input type="submit" value="Register" />
+          </form>
+        </div>
+        <div className="login-container margin">
+          <p className="existing-account-description">
+            If already have an account then directly click on login!!
+          </p>
+          <button type="submit" className="login-btn">
+            <a href="/login">Login</a>
+          </button>
+        </div>
       </div>
     </>
   );

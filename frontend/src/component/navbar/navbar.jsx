@@ -37,6 +37,9 @@ const Navbar = () => {
               <i class="fa-solid fa-cart-shopping"></i>
             </a>
           </li>
+          <li>
+            <a href="/product-profile">Product Profile</a>
+          </li>
         </ul>
       </nav>
     </>
