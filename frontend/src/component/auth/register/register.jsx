@@ -1,9 +1,13 @@
 import "./register.css";
 
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+
+import { signUp } from "../../../store/actions/authAction";
 import { useState } from "react";
 
 const Register = () => {
+  const dispatch = useDispatch();
+
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -20,15 +24,20 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(user);
-    axios
-      .post(`http://localhost:8080/register`, user)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(signUp(user));
+    setUser({
+      name: "",
+      email: "",
+      password: "",
+      phone: 0,
+      dob: "",
+      locality: "",
+      role: "",
+      city: "",
+      pincode: 0,
+      state: "",
+      country: "",
+    });
   };
 
   return (
@@ -104,7 +113,7 @@ const Register = () => {
               />
             </div>
             <div className="form-group">
-              <label For="role">
+              <label htmlFor="role">
                 Role:
                 <select
                   id="role"

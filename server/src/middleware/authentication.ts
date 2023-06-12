@@ -11,7 +11,7 @@ export const authenticateToken = async (
   next: NextFunction
 ) => {
   try {
-    const token = req.header("Authorization")?.replace("Bearer ", "");
+    const token = req.body.token || req.query.token || req.headers["x-access-token"] || req.header("Authorization")?.replace("Bearer ", "");
 
     if (!token) {
       throw new Error();
@@ -22,7 +22,7 @@ export const authenticateToken = async (
 
     next();
   } catch (err) {
-    res.status(401).send("Please authenticate");
+    res.status(401).send("Please authenticate [invalid token]");
   }
 };
 export default authenticateToken;

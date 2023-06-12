@@ -1,3 +1,4 @@
+import cartRouter from "./router/cartRouter";
 import cors from "cors";
 import express from "express";
 import mysql from "mysql";
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(userRouter);
 app.use(productRouter);
+app.use(cartRouter);
 
 // export const connection = mysql.createConnection(`mysql://root:root@localhost:3307/marketplace`);
 export const dbconnection = mysql.createConnection({

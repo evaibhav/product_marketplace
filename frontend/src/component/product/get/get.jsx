@@ -1,47 +1,66 @@
 import "./get.css";
 
+import {
+  deleteProduct,
+  getProductById,
+} from "../../../store/actions/productAction";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-import axios from "axios";
+import UpdateProduct from "../update/update";
+import { useNavigate } from "react-router-dom";
 
 const GetProduct = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
+
+  const product = useSelector((state) => state.products.detail);
+
+  const handleEdit = (id, item) => {
+    setData(item);
+    navigate(`/update-product/${id}`);
+  };
+  const handleDelete = (id) => {
+    dispatch(deleteProduct(id));
+  };
+
+  // const updateProductProps = { data };
+
   useEffect(() => {
-    fetchData();
+    dispatch(getProductById());
   }, []);
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`http://localhost:8080/get-product/2`);
-      setData(response.data);
-    } catch (error) {
-      console.log("Error fetching data:", error);
-    }
-  };
-
-  const handleDelete = () => {
-    try {
-      axios.delete(`http://localhost:8080/delete/2`);
-    } catch (error) {
-      console.log("Error fetching data:", error);
-    }
-  };
   return (
     <>
       <div className="home">
         <div className="main-category">PRODUCTS</div>
         <div className="grid">
-          {data.map((item) => (
-            <div className="grid-box">
-              <img src={require("../../img/plantimg.png")} alt="display-img" />
-              <p className="producthomepagedetails">{item.pname}</p>
-              <p className="producthomepagedetails">Qty: {item.qty}</p>
-              <p className="producthomepagedetails">Price: {item.price}$</p>
-              <button onClick={handleDelete}>delete</button>
-            </div>
-          ))}
+          {product ? (
+            <>
+              {product.map((item) => (
+                <div className="grid-product-box">
+                  <img
+                    src={require("../../img/plantimg.png")}
+                    alt="display-img"
+                  />
+                  <p className="producthomepagedetails">{item.pname}</p>
+                  <p className="producthomepagedetails">Qty: {item.qty}</p>
+                  <p className="producthomepagedetails">Price: {item.price}$</p>
+                  <button onClick={() => handleDelete(item.id)}>delete</button>
+                  <button onClick={() => handleEdit(item.id, item)}>
+                    Edit
+                  </button>
+                </div>
+              ))}
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
+
+      {/* <UpdateProduct {...updateProductProps} /> */}
     </>
   );
 };

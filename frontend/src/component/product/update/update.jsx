@@ -1,28 +1,32 @@
-import "./create.css";
+import "./update";
 
-import { createProduct } from "../../../store/actions/productAction";
+import { editProduct } from "../../../store/actions/productAction";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState } from "react";
 
-const CreateProduct = () => {
+const UpdateProduct = ({ item }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [product, setProduct] = useState({
+  const { id } = useParams();
+console.log(item, 'updatecompitem')
+  const [updateProduct, setUpdateProduct] = useState({
     pname: "",
-    price: 0,
-    qty: 0,
+    price: null,
+    qty: null,
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createProduct(product));
+    dispatch(editProduct(id, updateProduct));
     navigate("/view-product");
   };
+
   return (
     <>
       <div className="container">
-        <h2>Create Product</h2>
+        <h2>Update Product</h2>
         <form onSubmit={handleSubmit}>
           <div class="form-group">
             <label for="pname">Name:</label>
@@ -30,10 +34,11 @@ const CreateProduct = () => {
               type="text"
               id="pname"
               name="pname"
-              value={product.pname}
+              value={updateProduct.pname}
+              placeholder="harsh"
               required
               onChange={(e) =>
-                setProduct({ ...product, pname: e.target.value })
+                setUpdateProduct({ ...updateProduct, pname: e.target.value })
               }
             />
           </div>
@@ -43,10 +48,11 @@ const CreateProduct = () => {
               type="number"
               id="price"
               name="price"
-              value={product.price}
+              value={updateProduct.price}
               required
+              placeholder="20"
               onChange={(e) =>
-                setProduct({ ...product, price: e.target.value })
+                setUpdateProduct({ ...updateProduct, price: e.target.value })
               }
             />
           </div>
@@ -56,9 +62,11 @@ const CreateProduct = () => {
               type="number"
               id="qty"
               name="qty"
-              value={product.qty}
+              value={updateProduct.qty}
               required
-              onChange={(e) => setProduct({ ...product, qty: e.target.value })}
+              onChange={(e) =>
+                setUpdateProduct({ ...updateProduct, qty: e.target.value })
+              }
             />
           </div>
           <input type="submit" value="Submit" />
@@ -68,4 +76,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default UpdateProduct;

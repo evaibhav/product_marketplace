@@ -5,6 +5,7 @@ import { useState } from "react";
 
 const Navbar = () => {
   const [show, setShow] = useState(false);
+  // const
 
   return (
     <>
@@ -14,14 +15,19 @@ const Navbar = () => {
             Ecommerce Marketplace
           </a>
         </div>
-        <div className="navbar-center">
-          <form>
-            <input type="text" placeholder="Search" />
+        {/* <div className="navbar-center">
+          <form onSubmit={handleSearch}>
+            <input
+              type="text"
+              placeholder="Search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
             <button type="submit">
               <strong>Search</strong>
             </button>
           </form>
-        </div>
+        </div> */}
         <ul className="navbar-right">
           <li>
             <a href="/">Home</a>

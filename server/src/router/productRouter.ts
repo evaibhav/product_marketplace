@@ -1,13 +1,15 @@
 import ProductController from "../controller/productController";
 import { Router } from "express";
+import authenticateToken from "../middleware/authentication";
 
 const controller = new ProductController();
-const userRouter = Router();
+const productRouter = Router();
 
-userRouter.post("/create/:uid", controller.createProduct);
-userRouter.put("/update/:id", controller.updateProduct);
-userRouter.delete("/delete/:id", controller.deleteProduct);
-userRouter.get("/get-product/:uid", controller.getProduct);
-userRouter.get("/get-products", controller.getProducts);
+productRouter.post("/create", authenticateToken, controller.createProduct);
+productRouter.put("/update/:id", controller.updateProduct);
+productRouter.delete("/delete/:id", controller.deleteProduct);
+productRouter.get("/getProductDetails/:id", controller.getProductDetails);
+productRouter.get("/getProducts", controller.getProducts);
+productRouter.get("/getProductById",authenticateToken, controller.getProductById);
 
-export default userRouter;
+export default productRouter;

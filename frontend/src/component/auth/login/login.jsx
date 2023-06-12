@@ -1,29 +1,33 @@
 import "./login.css";
 
-import axios from "axios";
+import { loadUser, signIn } from "../../../store/actions/authAction";
+import { useDispatch, useSelector } from "react-redux";
+
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const auth = useSelector((state) => state.auth);
+  console.log(auth, " login auth");
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
 
-  const [message, setMessage] = useState({
-    message: "",
-  });
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    await axios
-      .post(`http://localhost:8080/login`, loginData)
-      .then((res) => {
-        setMessage(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(signIn(loginData));
+    // dispatch(loadUser());
+    setLoginData({
+      email: "",
+      password: "",
+    });
+    navigate("/");
   };
+
+  if (auth.id) return navigate("/");
 
   return (
     <>
@@ -58,7 +62,6 @@ const Login = () => {
           </div>
           <input type="submit" value="Login" />
         </form>
-        <p>{message.message}</p>
       </div>
     </>
   );

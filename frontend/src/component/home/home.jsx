@@ -1,35 +1,68 @@
 import "./home.css";
 
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-import axios from "axios";
+import { Link } from "react-router-dom";
+import { addToCart } from "../../store/actions/cartAction";
+import { getProduct } from "../../store/actions/productAction";
 
 const Home = () => {
-  const [data, setData] = useState([]);
+  const [query, setQuery] = useState("");
+
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const products = useSelector((state) => state.products.products);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    dispatch(getProduct(null, query));
+  };
+
+  const handleAddToCart = (pid) => {
+    dispatch(addToCart(pid));
+  };
+
   useEffect(() => {
-    fetchData();
+    dispatch(getProduct());
   }, []);
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`http://localhost:8080/get-products`);
-      setData(response.data);
-    } catch (error) {
-      console.log("Error fetching data:", error);
-    }
-  };
   return (
     <>
       <div className="home">
-        <div className="main-category">HOME</div>
+        <div className="main-category">
+          <form onSubmit={handleSearch}>
+            <input
+              type="text"
+              placeholder="Search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            <button type="submit">
+              <strong>Search</strong>
+            </button>
+          </form>
+        </div>
         <div className="grid">
-          {data.map((item) => (
+          {products.map((item) => (
             <div className="grid-box">
               <img src={require("../img/plantimg.png")} alt="display-img" />
-              <p className="producthomepagedetails">{item.pname}</p>
-              <p className="producthomepagedetails">Qty: {item.qty}</p>
-              <p className="producthomepagedetails">Price: {item.price}$</p>
-              <button>add to cart</button>
+              <Link
+                to={`/product-detail/${item.id}`}
+                title="CLick to get details"
+                className="link-tag"
+              >
+                <p className="producthomepagedetails">{item.pname}</p>
+                <p className="producthomepagedetails">Qty: {item.qty}</p>
+                <p className="producthomepagedetails">Price: ${item.price} </p>
+              </Link>
+              <button
+                onClick={() => {
+                  handleAddToCart(item.id);
+                }}
+              >
+                add to cart
+              </button>
             </div>
           ))}
         </div>
