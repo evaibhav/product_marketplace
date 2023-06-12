@@ -1,4 +1,4 @@
-import { setHeaders, url } from "../../api";
+import { setHeaders, url } from "../../api/index";
 
 import axios from "axios";
 
@@ -12,7 +12,7 @@ export const addToCart = (pid) => {
         });
       })
       .catch((error) => {
-        console.log(error.response);
+        console.log(error.response,'data');
       });
   };
 };
@@ -21,10 +21,13 @@ export const getCartProduct = () => {
   return (dispatch) => {
     axios.get(`${url}/cartProducts`, setHeaders())
     .then((resp) => {
+      console.log(resp.data, 'cart action');
+      const cartData = resp.data;
       dispatch({
         type: "GET_CART_DATA",
-        resp,
+        cartData,
       });
     });
   };
 };
+  

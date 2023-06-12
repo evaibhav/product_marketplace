@@ -1,10 +1,10 @@
 import "react-toastify/dist/ReactToastify.css";
 
 import jwtDecode from "jwt-decode";
-import { toast } from "react-toastify";
 
 const initialState = {
   token: localStorage.getItem("token"),
+  user: localStorage.getItem("user"),
   role: null,
   email: null,
   id: null,
@@ -13,22 +13,16 @@ const initialState = {
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SIGN_UP":
-      toast("User Registered succesfully...", {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
       break;
     case "USER_LOADED":
     case "SIGN_IN":
-      toast("User Logged in succesfully...", {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-      console.log(action, 'reducer action')
       localStorage.setItem("token", action.token);
       const user = jwtDecode(action.token);
-      console.log(user,'action user')
+      localStorage.setItem("user", user);
       return {
         ...initialState,
         token: action.token,
+        user: user,
         role: user.role,
         email: user.email,
         id: user.id,
@@ -36,9 +30,8 @@ const authReducer = (state = initialState, action) => {
 
     case "SIGN_OUT":
       localStorage.removeItem("token");
-      toast("User logged out...", {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
+      localStorage.removeItem("user");
+
       return {
         token: null,
         role: null,

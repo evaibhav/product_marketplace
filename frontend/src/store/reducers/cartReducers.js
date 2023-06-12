@@ -1,11 +1,14 @@
-const cartReducers = (cartProduct = [], action) => {
+const cartReducers = (cartProducts = [], action) => {
   switch (action.type) {
     case "GET_CART_DATA":
-      return action.cartProduct.data;
+      return{
+        ...cartProducts,
+       cartProducts: action.cartData
+      }
     case "ADD_TO_CART":
       break;
     default:
-      return cartProduct;
+      return cartProducts;
   }
 };
 

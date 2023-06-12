@@ -7,7 +7,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-import UpdateProduct from "../update/update";
 import { useNavigate } from "react-router-dom";
 
 const GetProduct = () => {
@@ -25,7 +24,7 @@ const GetProduct = () => {
     dispatch(deleteProduct(id));
   };
 
-  // const updateProductProps = { data };
+  const updateProductProps = { products: data };
 
   useEffect(() => {
     dispatch(getProductById());
@@ -55,12 +54,10 @@ const GetProduct = () => {
               ))}
             </>
           ) : (
-            <></>
+            <>No product available</>
           )}
         </div>
       </div>
-
-      {/* <UpdateProduct {...updateProductProps} /> */}
     </>
   );
 };

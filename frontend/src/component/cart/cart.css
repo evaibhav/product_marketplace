@@ -65,7 +65,8 @@ section {
   width: 40px;
   height: 30px;
   background-color: green;
-  border: 0px;
+  /* border: 0px; */
+  padding: 8px;
   cursor: pointer;
   font-weight: bold;
 }
@@ -82,8 +83,11 @@ section {
 .op-quantity input {
   width: 40%;
   height: 22%;
-  border: 2px 0px solid;
+  border: 1px solid black;
+  border-radius: 3.4rem;
 }
+
+
 
 .checkoutbtn button {
   padding: 5px 15px;

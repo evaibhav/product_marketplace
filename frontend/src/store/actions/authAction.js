@@ -26,7 +26,6 @@ export const signIn = (creds) => {
     axios
       .post(`${url}/login`, creds)
       .then((resp) => {
-        console.log(resp,'action resp')
         localStorage.setItem("token", resp.data.token);
 
         dispatch({
@@ -43,11 +42,13 @@ export const signIn = (creds) => {
 export const loadUser = () => {
   return (dispatch, getState) => {
     const token = getState().auth.token;
+    const user = getState().auth.user;
 
     if (token) {
       dispatch({
         type: "USER_LOADED",
         token,
+        user,
       });
     } else return null;
   };

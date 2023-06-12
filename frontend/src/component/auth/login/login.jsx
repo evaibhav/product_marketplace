@@ -10,7 +10,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
-  console.log(auth, " login auth");
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",

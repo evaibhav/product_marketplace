@@ -52,7 +52,6 @@ export const getProduct = (id, keyword) => {
       axios
         .get(`${url}/getProducts?keyword=${keyword}`)
         .then((products) => {
-          console.log(products);
           dispatch({
             type: "GET_PRODUCTS",
             products,
@@ -91,7 +90,6 @@ export const deleteProduct = (id) => {
 export const getProductDetail = (id) => {
   return (dispatch) => {
     axios.get(`${url}/getProductDetails/${id}`).then((product) => {
-      console.log(product);
       dispatch({
         type: "GET_PRODUCT_DETAIL",
         product,
@@ -104,7 +102,6 @@ export const getProductById = () => {
   return (dispatch) => {
     axios.get(`${url}/getProductById`, setHeaders())
     .then((resp) => {
-      console.log(resp);
       const product = resp.data;
       dispatch({
         type: "GET_PRODUCT_DETAIL",

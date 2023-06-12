@@ -10,7 +10,7 @@ const UpdateProduct = ({ item }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-console.log(item, 'updatecompitem')
+
   const [updateProduct, setUpdateProduct] = useState({
     pname: "",
     price: null,
@@ -35,7 +35,6 @@ console.log(item, 'updatecompitem')
               id="pname"
               name="pname"
               value={updateProduct.pname}
-              placeholder="harsh"
               required
               onChange={(e) =>
                 setUpdateProduct({ ...updateProduct, pname: e.target.value })

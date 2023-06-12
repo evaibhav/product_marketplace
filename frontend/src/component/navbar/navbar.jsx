@@ -1,10 +1,18 @@
 import "./navbar.css";
 import "./mediaquery.css";
 
+import { useDispatch, useSelector } from "react-redux";
+
+import { signOut } from "../../store/actions/authAction";
 import { useState } from "react";
 
 const Navbar = () => {
-  const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+
+  const handleLogOut = () => {
+    dispatch(signOut());
+  };
   // const
 
   return (
@@ -15,37 +23,48 @@ const Navbar = () => {
             Ecommerce Marketplace
           </a>
         </div>
-        {/* <div className="navbar-center">
-          <form onSubmit={handleSearch}>
-            <input
-              type="text"
-              placeholder="Search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-            <button type="submit">
-              <strong>Search</strong>
-            </button>
-          </form>
-        </div> */}
+
         <ul className="navbar-right">
           <li>
             <a href="/">Home</a>
           </li>
-          <li>
-            <button className="signupbtn" onClick={() => setShow(true)}>
-              <a href="/register">Register/Login</a>
-            </button>
-          </li>
-          <li>
-            <a href="/cart">
-              Cart
-              <i class="fa-solid fa-cart-shopping"></i>
-            </a>
-          </li>
-          <li>
-            <a href="/product-profile">Product Profile</a>
-          </li>
+          {auth && auth.token ? (
+            <>
+              <li>
+                <button className="signupbtn">
+                  <a href="#">{auth.email}</a>
+                </button>
+              </li>
+              <li>
+                <button className="signupbtn" onClick={handleLogOut}>
+                  <a href="#">Logout</a>
+                </button>
+              </li>
+              <li>
+                <a href="/product-profile">Product Profile</a>
+              </li>
+              <li>
+                <a href="/cart">
+                  Cart
+                  <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <button className="signupbtn">
+                  <a href="/register">Register/Login</a>
+                </button>
+              </li>
+              <li>
+                <a href="#">
+                  Cart
+                  <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
     </>
