@@ -7,5 +7,6 @@ const cartRouter = Router();
 
 cartRouter.post("/addToCart/:pid",authenticateToken, controller.addToCart);
 cartRouter.get("/cartProducts",authenticateToken, controller.getCartProducts);
+cartRouter.delete("/deleteCartProducts/:pid",authenticateToken, controller.deleteCartProducts);
 
 export default cartRouter;

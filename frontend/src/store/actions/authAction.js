@@ -1,5 +1,4 @@
 import axios from "axios";
-import { toast } from "react-toastify";
 import { url } from "../../api";
 
 export const signUp = (user) => {
@@ -14,9 +13,6 @@ export const signUp = (user) => {
       })
       .catch((error) => {
         console.log(error.response);
-        toast.response(error.response?.data, {
-          position: toast.POSITION.BOTTOM_RIGHT,
-        });
       });
   };
 };
@@ -42,13 +38,13 @@ export const signIn = (creds) => {
 export const loadUser = () => {
   return (dispatch, getState) => {
     const token = getState().auth.token;
-    const user = getState().auth.user;
+    // const user = getState().auth.user;
 
     if (token) {
       dispatch({
         type: "USER_LOADED",
         token,
-        user,
+        
       });
     } else return null;
   };

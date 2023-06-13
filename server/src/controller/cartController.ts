@@ -9,7 +9,6 @@ export interface CustomRequest extends Request {
 
 class cartController {
   addToCart = (req: Request, res: Response) => {
-    console.log(req, "req");
     const { id } = (req as CustomRequest).token;
     const { pid } = req.params;
 
@@ -27,7 +26,7 @@ class cartController {
           } else {
             dbconnection.query(
               `insert into cart (uid, pid, isAdded) VALUES(?, ?, ?)`,
-              [id, pid, true],
+              [id, parseInt(pid), true],
               (error, results) => {
                 if (error) {
                   console.error(error);
@@ -49,7 +48,7 @@ class cartController {
 
   getCartProducts = (req: Request, res: Response) => {
     const { id } = (req as CustomRequest).token;
-  
+
     try {
       dbconnection.query(
         `SELECT * FROM cart WHERE uid = '${id}' AND isAdded = 1`,
@@ -58,7 +57,7 @@ class cartController {
             console.error(error);
             return res.status(500).json({ message: "Unknown error occurred" });
           }
-  
+
           if (results.length > 0) {
             const cartProductsPromises = results.map((item) => {
               return new Promise((resolve, reject) => {
@@ -77,12 +76,13 @@ class cartController {
                 );
               });
             });
-  
+
             Promise.all(cartProductsPromises)
               .then((cartProductsArr) => {
                 // Filter out null values (products not found)
-                const filteredCartProductsArr = cartProductsArr.filter((product) => product !== null);
-                console.log(filteredCartProductsArr, 'cartarr');
+                const filteredCartProductsArr = cartProductsArr.filter(
+                  (product) => product !== null
+                );
                 res.send(filteredCartProductsArr);
               })
               .catch((error) => {
@@ -100,52 +100,71 @@ class cartController {
       return res.status(500).json({ message: "Unknown error occurred" });
     }
   };
-  
-  
 
-  // getCartProducts = (req: Request, res: Response) => {
-  //   const { id } = (req as CustomRequest).token;
-  //   const cartProductsArr: any[] = []; // Specify the type as any[]
+  deleteCartProducts = (req: Request, res: Response) => {
+    const { id } = (req as CustomRequest).token;
+    const { pid } = req.params;
 
-  //   try {
-  //     dbconnection.query(
-  //       `SELECT * FROM cart WHERE uid = '${id}' AND isAdded = 1`,
-  //       (error: any, results: any[]) => {
-  //         if (error) {
-  //           console.error(error);
-  //           return res.status(500).json({ message: "Unknown error occurred" });
-  //         }
-
-  //         if (results.length > 0) {
-  //           for (const item of results) {
-  //             dbconnection.query(
-  //               `SELECT * FROM product WHERE id = '${item.pid}'`,
-  //               (err: any, result: any[]) => {
-  //                 if (result) {
-  //                   cartProductsArr.push(result[0]);
-                    
-  //                 } else if (err) {
-  //                   console.error(err);
-  //                   return res
-  //                     .status(500)
-  //                     .json({ message: "Unknown error occurred" });
-  //                 }
-  //               }
-  //             );
-  //           }
-  //           console.log(cartProductsArr,'cartarr')
-  //           res.send(cartProductsArr);
-  //         } else {
-  //           console.log(`User not registered with this email id`);
-  //           res.send(cartProductsArr);
-  //         }
-  //       }
-  //     );
-  //   } catch (err) {
-  //     console.error(err);
-  //     return res.status(500).json({ message: "Unknown error occurred" });
-  //   }
-  // };
+    try {
+      dbconnection.query(
+        `DELETE FROM cart WHERE uid = '${id}' AND pid ='${pid}'`,
+        (err: any, result: any[]) => {
+          if (result) {
+            res.send(`Data deleted succesfully`);
+          } else if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Unknown error occurred" });
+          }
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
 }
+
+// getCartProducts = (req: Request, res: Response) => {
+//   const { id } = (req as CustomRequest).token;
+//   const cartProductsArr: any[] = []; // Specify the type as any[]
+
+//   try {
+//     dbconnection.query(
+//       `SELECT * FROM cart WHERE uid = '${id}' AND isAdded = 1`,
+//       (error: any, results: any[]) => {
+//         if (error) {
+//           console.error(error);
+//           return res.status(500).json({ message: "Unknown error occurred" });
+//         }
+
+//         if (results.length > 0) {
+//           for (const item of results) {
+//             dbconnection.query(
+//               `SELECT * FROM product WHERE id = '${item.pid}'`,
+//               (err: any, result: any[]) => {
+//                 if (result) {
+//                   cartProductsArr.push(result[0]);
+
+//                 } else if (err) {
+//                   console.error(err);
+//                   return res
+//                     .status(500)
+//                     .json({ message: "Unknown error occurred" });
+//                 }
+//               }
+//             );
+//           }
+//           console.log(cartProductsArr,'cartarr')
+//           res.send(cartProductsArr);
+//         } else {
+//           console.log(`User not registered with this email id`);
+//           res.send(cartProductsArr);
+//         }
+//       }
+//     );
+//   } catch (err) {
+//     console.error(err);
+//     return res.status(500).json({ message: "Unknown error occurred" });
+//   }
+// };
 
 export default cartController;

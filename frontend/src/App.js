@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Cart from "./component/cart/cart";
+import Congratulate from "./component/congratulate/congratulate";
 import CreateProduct from "./component/product/create/create";
 import Footer from "./component/footer/footer";
 import GetProduct from "./component/product/get/get";
@@ -29,6 +30,7 @@ function App() {
         <Route exact path="/update-product/:id" element = {<UpdateProduct/>}/>
         <Route exact path="/view-product" element = {<GetProduct/>}/>
         <Route exact path="/product-detail/:id" element = {<ProductDetail/>}/>
+        <Route exact path="/congratulate" element = {<Congratulate/>}/>
         </Routes>
         <Footer/>
       </BrowserRouter>

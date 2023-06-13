@@ -14,7 +14,7 @@ class ProductController {
 
     try {
       dbconnection.query(
-        `SELECT * FROM user WHERE id = '${id}'`,
+        `SELECT * FROM user WHERE id = '${id}' AND role = 'vendor'`,
         (error, results) => {
           if (error) {
             console.error(error);

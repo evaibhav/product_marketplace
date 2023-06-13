@@ -1,7 +1,6 @@
 import { setHeaders, url } from "../../api";
 
 import axios from "axios";
-import { toast } from "react-toastify";
 
 export const createProduct = (product) => {
   return (dispatch) => {
@@ -15,10 +14,6 @@ export const createProduct = (product) => {
       })
       .catch((error) => {
         console.log(error.response);
-
-        toast.response(error.response?.data, {
-          position: toast.POSITION.BOTTOM_RIGHT,
-        });
       });
   };
 };

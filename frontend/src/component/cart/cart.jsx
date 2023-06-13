@@ -1,24 +1,57 @@
 import "./cart.css";
 
+import {
+  deleteCartProducts,
+  getCartProduct,
+} from "../../store/actions/cartAction";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-import { getCartProduct } from "../../store/actions/cartAction";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartProducts = useSelector((state) => state.cart.cartProducts);
-  const [count, setCount] = useState(0);
-  const handleAdd = () => {
-    setCount((prevCount) => prevCount + 1);
+
+  const [quantities, setQuantities] = useState({});
+  const handleAdd = (pid) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [pid]: (prevQuantities[pid] || 1) + 1,
+    }));
   };
 
-  const handleSubtract = () => {
-    setCount((prevCount) => prevCount - 1);
+  const handleSubtract = (pid) => {
+    setQuantities((prevQuantities) => {
+      const updatedQuantity = (prevQuantities[pid] || 1) - 1;
+      return {
+        ...prevQuantities,
+        [pid]: updatedQuantity >= 0 ? updatedQuantity : 1,
+      };
+    });
   };
   useEffect(() => {
     dispatch(getCartProduct());
   }, []);
+
+  // Calculate the total price based on quantities and product prices
+  const totalPrice = cartProducts?.reduce((total, item) => {
+    const quantity = quantities[item.id] || 1;
+    return total + item.price * quantity;
+  }, 0);
+
+  const handleCheckout = () => {
+    const quantityIds = Object.keys(quantities);
+
+    quantityIds.forEach((pid) => {
+      dispatch(deleteCartProducts(pid));
+    });
+    navigate("/congratulate");
+  };
+  const handleDlt = (id) => {
+    dispatch(deleteCartProducts(id));
+  };
   return (
     <>
       <section>
@@ -37,21 +70,28 @@ const Cart = () => {
                     Name: <strong>{item.pname}</strong>
                   </li>
                   <li>
-                    You Pay: <strong>{item.price}</strong>
+                    You Pay: $<strong>{item.price}</strong>
                   </li>
                   <li>
-                    Variant: <strong>{item.qty}</strong>
+                    Variant: <strong>{item.qty}</strong> unit
                   </li>
                 </ul>
                 <div className="op-quantity">
-                  <button onClick={handleAdd}>
+                  <button onClick={() => handleAdd(item.id)}>
                     <i class="fa-solid fa-plus"></i>
                   </button>
-                  <input type="text" value={count} readOnly />
-                  <button onClick={handleSubtract}>
+                  <input
+                    type="text"
+                    value={quantities[item.id] || 1}
+                    readOnly
+                  />
+                  <button onClick={() => handleSubtract(item.id)}>
                     <i class="fa-solid fa-minus"></i>
                   </button>
-                  <button className="dlt-product">
+                  <button
+                    className="dlt-product"
+                    onClick={() => handleDlt(item.id)}
+                  >
                     <i class="fa-solid fa-xmark"></i>
                   </button>
                 </div>
@@ -59,10 +99,12 @@ const Cart = () => {
             ))}
           <div class="flex-cart">
             <div className="cart-total-price">
-              <p>TOTAL PRICE: {}</p>
+              <p>
+                <strong> TOTAL PRICE: ${totalPrice} </strong>
+              </p>
             </div>
             <div className="checkoutbtn">
-              <button>Proceed to checkout</button>
+              <button onClick={handleCheckout}>Proceed to checkout</button>
             </div>
           </div>
         </div>

@@ -7,6 +7,11 @@ const cartReducers = (cartProducts = [], action) => {
       }
     case "ADD_TO_CART":
       break;
+      case "DELETE_CART_PRODUCT":
+        return {
+          ...cartProducts,
+          cartProducts: cartProducts.filter((product) => product.id !== action.id),
+        };
     default:
       return cartProducts;
   }

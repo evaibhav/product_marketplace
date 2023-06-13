@@ -7,8 +7,8 @@ import { dbconnection } from "..";
 class UserController {
   userRegister = (req: Request, res: Response) => {
     const data = req.body;
-    
-     dbconnection.query(
+
+    dbconnection.query(
       `INSERT INTO user (name, email, password, phone, dob, locality, role, city, pincode, state, country, createdAt, updatedAt) VALUES('${data.name}', '${data.email}' , '${data.password}', '${data.phone}', '${data.dob}', '${data.locality}', '${data.role}', '${data.city}', '${data.pincode}', '${data.state}', '${data.country}',  CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP);`,
       (error, results) => {
         if (error) {

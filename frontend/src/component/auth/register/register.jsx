@@ -1,8 +1,7 @@
 import "./register.css";
 
-import { useDispatch, useSelector } from "react-redux";
-
 import { signUp } from "../../../store/actions/authAction";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 
 const Register = () => {
@@ -113,17 +112,15 @@ const Register = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="role">
-                Role:
-                <select
-                  id="role"
-                  value={user.role}
-                  onChange={(e) => setUser({ ...user, role: e.target.value })}
-                >
-                  <option value="vendor">Vendor</option>
-                  <option value="customer">Customer</option>
-                </select>
-              </label>
+              <label htmlFor="role">Role:</label>
+              <select
+                id="role"
+                value={user.role}
+                onChange={(e) => setUser({ ...user, role: e.target.value })}
+              >
+                <option value="vendor">vendor</option>
+                <option value="customer">customer</option>
+              </select>
             </div>
             <div class="form-group">
               <label for="city">City:</label>

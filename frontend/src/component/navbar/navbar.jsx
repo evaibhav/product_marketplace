@@ -4,16 +4,13 @@ import "./mediaquery.css";
 import { useDispatch, useSelector } from "react-redux";
 
 import { signOut } from "../../store/actions/authAction";
-import { useState } from "react";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-
   const handleLogOut = () => {
     dispatch(signOut());
   };
-  // const
 
   return (
     <>
@@ -40,9 +37,15 @@ const Navbar = () => {
                   <a href="#">Logout</a>
                 </button>
               </li>
-              <li>
-                <a href="/product-profile">Product Profile</a>
-              </li>
+              {auth && auth.role === "vendor" ? (
+                <>
+                  <li>
+                    <a href="/product-profile">Product Profile</a>
+                  </li>
+                </>
+              ) : (
+                <></>
+              )}
               <li>
                 <a href="/cart">
                   Cart

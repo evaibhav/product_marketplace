@@ -69,6 +69,7 @@ section {
   padding: 8px;
   cursor: pointer;
   font-weight: bold;
+  border-radius: 5px;
 }
 
 .op-quantity button:hover {
@@ -81,13 +82,11 @@ section {
 }
 
 .op-quantity input {
+
   width: 40%;
-  height: 22%;
+  height: 20%;
   border: 1px solid black;
-  border-radius: 3.4rem;
 }
-
-
 
 .checkoutbtn button {
   padding: 5px 15px;

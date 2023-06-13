@@ -1,0 +1,31 @@
+.main-appreciation {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  background-image: url("../img/Registration.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.appreciation {
+  height: 50%;
+  width: 50%;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5%;
+}
+
+.appreciation p {
+  text-align: center;
+  font-size: 3.2rem;
+}
+
+.color-congrats {
+  color: green;
+}
+
+.success {
+  margin-top: 50px;
+  color: red;
+}

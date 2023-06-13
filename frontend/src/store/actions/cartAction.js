@@ -5,14 +5,14 @@ import axios from "axios";
 export const addToCart = (pid) => {
   return (dispatch) => {
     axios
-      .post(`${url}/addToCart/${pid}`, setHeaders())
-      .then(() => {
+      .post(`${url}/addToCart/${pid}`,null, setHeaders())
+      .then((res) => {
         dispatch({
           type: "ADD_TO_CART"
         });
       })
       .catch((error) => {
-        console.log(error.response,'data');
+        console.log(error.response);
       });
   };
 };
@@ -21,7 +21,6 @@ export const getCartProduct = () => {
   return (dispatch) => {
     axios.get(`${url}/cartProducts`, setHeaders())
     .then((resp) => {
-      console.log(resp.data, 'cart action');
       const cartData = resp.data;
       dispatch({
         type: "GET_CART_DATA",
@@ -31,3 +30,13 @@ export const getCartProduct = () => {
   };
 };
   
+export const deleteCartProducts = (id)=>{
+  return (dispatch) => {
+    axios.delete(`${url}/deleteCartProducts/${id}`, setHeaders()).then(() => {
+      dispatch({
+        type: "DELETE_CART_PRODUCT",
+        id,
+      });
+    });
+  };
+}
