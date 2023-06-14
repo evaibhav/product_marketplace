@@ -2,6 +2,7 @@ import "./cart.css";
 
 import {
   deleteCartProducts,
+  deleteMultipleCartProducts,
   getCartProduct,
 } from "../../store/actions/cartAction";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +14,6 @@ const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cartProducts = useSelector((state) => state.cart.cartProducts);
-
   const [quantities, setQuantities] = useState({});
   const handleAdd = (pid) => {
     setQuantities((prevQuantities) => ({
@@ -42,11 +42,11 @@ const Cart = () => {
   }, 0);
 
   const handleCheckout = () => {
-    const quantityIds = Object.keys(quantities);
-
-    quantityIds.forEach((pid) => {
-      dispatch(deleteCartProducts(pid));
-    });
+    const totalpids = cartProducts.map((item) => String(item.id));
+    const data = {
+      pids: totalpids,
+    };
+    dispatch(deleteMultipleCartProducts(data));
     navigate("/congratulate");
   };
   const handleDlt = (id) => {

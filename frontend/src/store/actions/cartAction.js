@@ -5,10 +5,10 @@ import axios from "axios";
 export const addToCart = (pid) => {
   return (dispatch) => {
     axios
-      .post(`${url}/addToCart/${pid}`,null, setHeaders())
+      .post(`${url}/addToCart/${pid}`, null, setHeaders())
       .then((res) => {
         dispatch({
-          type: "ADD_TO_CART"
+          type: "ADD_TO_CART",
         });
       })
       .catch((error) => {
@@ -19,8 +19,7 @@ export const addToCart = (pid) => {
 
 export const getCartProduct = () => {
   return (dispatch) => {
-    axios.get(`${url}/cartProducts`, setHeaders())
-    .then((resp) => {
+    axios.get(`${url}/cartProducts`, setHeaders()).then((resp) => {
       const cartData = resp.data;
       dispatch({
         type: "GET_CART_DATA",
@@ -29,8 +28,8 @@ export const getCartProduct = () => {
     });
   };
 };
-  
-export const deleteCartProducts = (id)=>{
+
+export const deleteCartProducts = (id) => {
   return (dispatch) => {
     axios.delete(`${url}/deleteCartProducts/${id}`, setHeaders()).then(() => {
       dispatch({
@@ -39,4 +38,16 @@ export const deleteCartProducts = (id)=>{
       });
     });
   };
-}
+};
+
+export const deleteMultipleCartProducts = (data) => {
+  return (dispatch) => {
+    axios.delete(`${url}/deleteMultipleCartProducts`,{ ...setHeaders(), data: data }).then((resp) => {
+      const respdata = resp.data;
+      dispatch({
+        type: "DELETE_CART_PRODUCT",
+        respdata
+      });
+    });
+  };
+};

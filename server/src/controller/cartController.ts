@@ -121,7 +121,31 @@ class cartController {
       console.log(err);
     }
   };
-}
+
+
+deleteMultipleCartProducts = (req: Request, res: Response) => {
+  const { id } = (req as CustomRequest).token;
+  const { pids } = req.body  as { pids: string[] };
+// console.log( pids)
+  try {
+    dbconnection.query(
+      `DELETE FROM cart WHERE uid = '${id}' AND pid IN (${pids.map(pid => `'${pid}'`).join(",")})`,
+      (err: any, result: any[]) => {
+        if (result) {
+          res.send(pids);
+        } else if (err) {
+          console.error(err);
+          return res.status(500).json({ message: "Unknown error occurred" });
+        }
+      }
+    );
+  } catch (err) {
+    console.log(err);
+    
+  }
+};
+
+};
 
 // getCartProducts = (req: Request, res: Response) => {
 //   const { id } = (req as CustomRequest).token;
